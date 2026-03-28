@@ -1,10 +1,10 @@
 import os
 import sys
 import uuid
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import uvicorn
-from fastapi import FastAPI, HTTPException
+from fastapi import Body, FastAPI, HTTPException
 from pydantic import BaseModel
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
@@ -51,22 +51,27 @@ def root() -> Dict[str, Any]:
 
 
 @app.post("/reset")
-def reset(payload: ResetRequest) -> Dict[str, Any]:
-    if payload.task not in TASKS:
-        raise HTTPException(status_code=400, detail=f"Unknown task: {payload.task}")
+def reset(
+    payload: Optional[ResetRequest] = Body(default=None),
+    task: str = "easy",
+    seed: int = 42,
+) -> Dict[str, Any]:
+    req = payload if payload is not None else ResetRequest(task=task, seed=seed)
+    if req.task not in TASKS:
+        raise HTTPException(status_code=400, detail=f"Unknown task: {req.task}")
 
-    env = SupplyChainEnv(task=payload.task, seed=payload.seed)
-    obs = env.reset(seed=payload.seed)
+    env = SupplyChainEnv(task=req.task, seed=req.seed)
+    obs = env.reset(seed=req.seed)
     session_id = str(uuid.uuid4())
     SESSIONS[session_id] = SessionData(
         env=env,
-        task=payload.task,
-        seed=payload.seed,
+        task=req.task,
+        seed=req.seed,
         trajectory=[],
     )
     return {
         "session_id": session_id,
-        "task": payload.task,
+        "task": req.task,
         "observation": obs.model_dump(),
     }
 
