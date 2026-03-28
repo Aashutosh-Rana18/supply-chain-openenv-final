@@ -9,6 +9,7 @@ description = "OpenEnv environment for supply chain inventory management"
 authors = [{name = "Aashutosh Rana"}]
 dependencies = [
     "openenv-core>=0.2.0",
+    "openenv>=0.2.0",
     "numpy",
     "pydantic",
     "typing-extensions",
