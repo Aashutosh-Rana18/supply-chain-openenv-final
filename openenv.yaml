@@ -1,37 +1,51 @@
 openenv:
   name: supply-chain-env
   version: 0.1.0
-  description: Minimal OpenEnv-compatible supply chain environment
+  description: OpenEnv-compatible supply chain inventory management environment
+  framework: fastapi
+  entrypoint: app:app
   tasks:
     - name: easy
-      description: Stable demand, low noise
+      description: Stable demand, low variability
     - name: medium
-      description: Seasonal demand and moderate variability
+      description: Seasonal demand with moderate variability
     - name: hard
-      description: High variability with disruptions and delayed orders
+      description: Noisy demand with disruptions and delayed supply
   action_space:
-    type: continuous
-    shape: [num_products]
-    description: Non-negative order quantities per product
+    type: box
+    dtype: float32
+    shape: [3]
+    low: [0.0, 0.0, 0.0]
+    high: [100.0, 100.0, 100.0]
+    description: Non-negative order quantity for each of 3 products
   observation_space:
     type: dict
     fields:
       inventory:
-        type: array
-        shape: [num_products]
+        type: box
+        dtype: float32
+        shape: [3]
       time:
-        type: int
+        type: discrete
+        n: 365
       demand_history:
-        type: array
-        shape: [10, num_products]
+        type: box
+        dtype: float32
+        shape: [10, 3]
       weather:
-        type: float
+        type: box
+        dtype: float32
+        shape: [1]
       promotion:
-        type: float
+        type: box
+        dtype: float32
+        shape: [1]
       sustainability_score:
-        type: float
+        type: box
+        dtype: float32
+        shape: [1]
   reward_function:
-    description: Shaped reward with revenue, service bonus, and inventory/stockout penalties
+    description: Profit with ordering, holding, stockout, and sustainability adjustments
   api:
     base_path: /
     endpoints:

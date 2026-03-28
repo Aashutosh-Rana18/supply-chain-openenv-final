@@ -7,8 +7,7 @@ from supply_chain_env.inference import run_all_tasks
 
 
 def main() -> None:
-    scores = run_all_tasks(episodes=3, seed=42)
-    print("Final scores:")
+    scores = run_all_tasks(episodes=1, seed=42)
     for task in ("easy", "medium", "hard"):
         print(f"{task}: {scores[task]:.4f}")
 
