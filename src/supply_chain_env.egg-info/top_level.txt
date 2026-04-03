@@ -1,1 +1,2 @@
+server
 supply_chain_env

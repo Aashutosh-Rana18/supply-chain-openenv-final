@@ -2,7 +2,10 @@ Metadata-Version: 2.4
 Name: supply-chain-env
 Version: 0.1.0
 Summary: OpenEnv environment for supply chain inventory management
+Requires-Python: >=3.10
 Author: Aashutosh Rana
+Requires-Dist: openenv-core>=0.2.0
+Requires-Dist: openenv>=0.2.0
 Requires-Dist: numpy
 Requires-Dist: pydantic
 Requires-Dist: typing-extensions

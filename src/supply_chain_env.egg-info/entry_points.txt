@@ -1,2 +1,3 @@
 [console_scripts]
 inference = supply_chain_env.run:main
+server = server.app:main

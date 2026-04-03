@@ -1,0 +1,10 @@
+include README.md
+include DEPLOYMENT.md
+include SUBMISSION_CHECKLIST.md
+include openenv.yaml
+include Dockerfile
+include app.py
+include inference.py
+recursive-include server *.py
+recursive-include src/supply_chain_env *.py
+recursive-include tests *.py

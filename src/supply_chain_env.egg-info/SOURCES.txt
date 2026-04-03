@@ -1,5 +1,14 @@
+MANIFEST.in
 README.md
+DEPLOYMENT.md
+SUBMISSION_CHECKLIST.md
+Dockerfile
+app.py
+inference.py
+openenv.yaml
 pyproject.toml
+server/__init__.py
+server/app.py
 src/supply_chain_env/__init__.py
 src/supply_chain_env/baseline.py
 src/supply_chain_env/environment.py
